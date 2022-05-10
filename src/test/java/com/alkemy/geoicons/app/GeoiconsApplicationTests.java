@@ -1,4 +1,4 @@
-package com.alkemy.geoicons.geoicons;
+package com.alkemy.geoicons.app;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
