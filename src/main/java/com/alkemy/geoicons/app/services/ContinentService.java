@@ -1,17 +1,12 @@
 package com.alkemy.geoicons.app.services;
 
 import com.alkemy.geoicons.app.dtos.ContinentDTO;
-import org.springframework.stereotype.Service;
 
-@Service
-public class ContinentService {
+import java.util.List;
 
-    //método para guardar mi continente
-    public ContinentDTO save(ContinentDTO dto) {
-        //todo código de guardar continente
+public interface ContinentService {
+    //abstracción de métodos ContinentServiceImpl
+    ContinentDTO save(ContinentDTO dto);
 
-        System.out.println("GUARDAR CONTINENTE");
-
-        return dto;
-    }
+    List<ContinentDTO> getAllContinents();
 }

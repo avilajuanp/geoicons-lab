@@ -5,10 +5,9 @@ import com.alkemy.geoicons.app.services.ContinentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("continents") //como se va a llamar la base de nuestro Path
@@ -16,6 +15,15 @@ public class ContinentController {
 
     @Autowired //anotación para que Spring me traiga mi servicio para trabajar
     private ContinentService continentService;
+
+    //endpoint GET para obtener listado de continentes guardados
+    @GetMapping
+    public ResponseEntity<List<ContinentDTO>> getAll(){
+        //instancio lista para el Return
+        List<ContinentDTO> continents = continentService.getAllContinents();
+        //retorno la Lista creada
+        return ResponseEntity.ok().body(continents);
+    }
 
     //endpoint para poder guardar continents, es POST xq estamos creando continent
     @PostMapping

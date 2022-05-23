@@ -2,6 +2,9 @@ package com.alkemy.geoicons.app.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +14,8 @@ import java.util.Set;
 @Table (name = "country")
 @Getter
 @Setter
-
+@SQLDelete(sql = "UPDATE country SET deleted = true WHERE id=?") //cuando elimino entidad, solo hace un update para el Soft Delete
+@Where(clause = "deleted=false") // diferencio los borrados de los activos cdo busco info a la DB
 public class CountryEntity {
 
     //asigno variable como PK, y se genera secuencialmente
@@ -29,7 +33,7 @@ public class CountryEntity {
     fetch y cascade para traer la info de antemano, y para q se elimine todo por si hago un delete
     JoinColumn refiere al Id de continente q vamos a usar para instanciar el objeto
      */
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "continent_id", insertable = false, updatable = false)
     private ContinentEntity continent;
 
@@ -51,5 +55,7 @@ public class CountryEntity {
             inverseJoinColumns = @JoinColumn(name = "icon_id")
             )
     private Set<IconEntity> icons = new HashSet<>();
+
+    private boolean deleted = false;
 
 }
